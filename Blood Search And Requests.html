@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaktSetu - Find Blood</title>
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary: #34495e;
+            --light: #ecf0f1;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #c0392b;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding: 0 20px;
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .search-title {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        label {
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        select, input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .search-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .urgent-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--danger);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .results-container {
+            margin-top: 30px;
+        }
+        
+        .result-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .blood-type {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .distance {
+            color: var(--secondary);
+            font-size: 14px;
+        }
+        
+        .bank-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .bank-address {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .availability {
+            color: var(--success);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .request-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .call-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .active {
+            color: var(--primary);
+        }
+        
+        .sos-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: var(--danger);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            font-size: 16px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .search-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span>🩸</span>
+            <span>RaktSetu</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <div class="search-title">Find Blood Near You</div>
+            <div class="search-form">
+                <div class="form-group">
+                    <label for="blood-type">Blood Type</label>
+                    <select id="blood-type">
+                        <option value="a_pos">A+</option>
+                        <option value="a_neg">A-</option>
+                        <option value="b_pos">B+</option>
+                        <option value="b_neg">B-</option>
+                        <option value="ab_pos">AB+</option>
+                        <option value="ab_neg">AB-</option>
+                        <option value="o_pos">O+</option>
+                        <option value="o_neg">O-</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="Enter your location or use current">
+                </div>
+                
+                <div class="urgent-toggle">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Emergency/Urgent Need</span>
+                </div>
+                
+                <button class="search-btn">Search Blood Banks</button>
+            </div>
+        </div>
+        
+        <div class="results-container">
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="blood-type">A+</div>
+                    <div class="distance">1.2 km away</div>
+                </div>
+                <div class="bank-name">City Blood Bank</div>
+                <div class="bank-address">123 Hospital Road, Medical District</div>
+                <div class="availability">12 units available</div>
+                <div class="action-btns">
+                    <button class="request-btn">Request</button>
+                    <button class="call-btn">Call</button>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="blood-type">A+</div>
+                    <div class="distance">3.5 km away</div>
+                </div>
+                <div class="bank-name">General Hospital Blood Center</div>
+                <div class="bank-address">456 Healthcare Avenue, East Wing</div>
+                <div class="availability">8 units available</div>
+                <div class="action-btns">
+                    <button class="request-btn">Request</button>
+                    <button class="call-btn">Call</button>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="blood-type">A+</div>
+                    <div class="distance">5.8 km away</div>
+                </div>
+                <div class="bank-name">Regional Medical Center</div>
+                <div class="bank-address">789 Lifesaver Drive, Suite 20</div>
+                <div class="availability">15 units available</div>
+                <div class="action-btns">
+                    <button class="request-btn">Request</button>
+                    <button class="call-btn">Call</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sos-button">SOS</div>
+    
+    <div class="nav-bar">
+        <a href="#" class="nav-item active">
+            <div class="nav-icon">🔍</div>
+            <div>Search</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">📋</div>
+            <div>Orders</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">💬</div>
+            <div>Wily</div>
+        </a>
+        <a href="#" class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div>Profile</div>
+        </a>
+    </div>
+</body>
+</html>
