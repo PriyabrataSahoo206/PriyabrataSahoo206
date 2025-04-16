@@ -1,0 +1,658 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaktSetu - Bridging Blood Donors with Those in Need</title>
+  <style>
+    :root {
+      --primary: #e63946;
+      --primary-dark: #c1121f;
+      --secondary: #457b9d;
+      --light: #f1faee;
+      --dark: #1d3557;
+      --success: #2a9d8f;
+      --warning: #e9c46a;
+      --danger: #e76f51;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      height: 120px;
+      top: 0;
+      z-index: 100;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo-icon {
+      color: var(--primary);
+      font-size: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .hero {
+      background: linear-gradient(rgba(29, 53, 87, 0.8), rgba(29, 53, 87, 0.9)), url('/api/placeholder/1200/800') center/cover no-repeat;
+      color: white;
+      padding: 150px 0 100px;
+      text-align: center;
+      margin-top: 65px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+
+    .section-title p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: #555;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+      height: 80px;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+
+    .feature-content {
+      padding: 25px;
+    }
+
+    .feature-content h3 {
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+
+    .how-it-works {
+      background-color: #f8f9fa;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 30px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0 auto 20px;
+    }
+
+    .step h3 {
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+
+    .dashboard-preview {
+      background-color: white;
+      text-align: center;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 40px;
+    }
+
+    .users {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .user-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      text-align: center;
+      padding: 30px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .user-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .user-card h3 {
+      margin: 20px 0 15px;
+      color: var(--dark);
+    }
+
+    .cta {
+      background: linear-gradient(rgba(230, 57, 70, 0.9), rgba(230, 57, 70, 0.8)), url('/api/placeholder/1200/800') center/cover no-repeat;
+      color: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      font-size: 18px;
+    }
+
+    .cta .btn-outline {
+      border-color: white;
+      color: white;
+    }
+
+    .cta .btn-outline:hover {
+      background-color: white;
+      color: var(--primary);
+    }
+
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 60px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--primary);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column ul li a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* Mobile menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--dark);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links, .auth-buttons {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-title h2 {
+        font-size: 28px;
+      }
+    }
+
+    /* Emergency SOS button */
+    .sos-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: var(--danger);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(231, 111, 81, 0.5);
+      cursor: pointer;
+      z-index: 99;
+      transition: all 0.3s;
+    }
+
+    .sos-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(231, 111, 81, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed SOS Button -->
+  <div class="sos-button">SOS</div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-icon"><img src="./images/logo final.jpg" height="60" width="60"></span>
+          <span>RaktSetu</span>
+        </div>
+        <button class="mobile-menu-btn">☰</button>
+        <nav class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#users">For Users</a>
+          <a href="#about">About Us</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="auth-buttons">
+          <a href="#" class="btn btn-outline">Login</a>
+          <a href="#" class="btn btn-primary">Register</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Bridging Blood Donors with Those in Need</h1>
+      <p>RaktSetu is a revolutionary platform connecting blood donors, patients, hospitals, and blood banks through an intelligent, real-time system.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">Request Blood</a>
+        <a href="#" class="btn btn-outline">Become a Donor</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Key Features</h2>
+        <p>RaktSetu offers a comprehensive ecosystem for blood donation and distribution</p>
+      </div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <div class="feature-content">
+            <h3>Smart Blood Search</h3>
+            <p>Find blood by type, location, and availability with our intelligent search system that provides alternatives when exact matches aren't available.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <div class="feature-content">
+            <h3>AI Assistant (Wily)</h3>
+            <p>Navigate the platform with our chat and voice-enabled AI assistant that helps you find what you need quickly in emergencies.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚨</div>
+          <div class="feature-content">
+            <h3>Emergency SOS</h3>
+            <p>One-tap emergency blood request feature that prioritizes your needs and alerts nearby donors and blood banks.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <div class="feature-content">
+            <h3>Live Blood Tracking</h3>
+            <p>Real-time visibility of blood stock across connected blood banks with intelligent suggestions for alternatives.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚚</div>
+          <div class="feature-content">
+            <h3>Secure Delivery</h3>
+            <p>Track your blood delivery in real-time with specialized medboxes that maintain temperature and sterility.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⛓️</div>
+          <div class="feature-content">
+            <h3>Blockchain Verification</h3>
+            <p>Transparent blood unit tracking from donor to recipient with immutable blockchain records ensuring safety and authenticity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-title">
+        <h2>How RaktSetu Works</h2>
+        <p>Our platform streamlines the entire blood donation and distribution process</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Register</h3>
+          <p>Sign up as a patient, donor, blood bank, or delivery partner on our platform.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Request or Donate</h3>
+          <p>Request blood or register as a donor and schedule your donation appointment.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Smart Matching</h3>
+          <p>Our AI matches requests with available blood units across registered blood banks.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Secure Delivery</h3>
+          <p>Track delivery in real-time with temperature-controlled medboxes for safe transport.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Preview Section -->
+  <section class="section dashboard-preview">
+    <div class="container">
+      <div class="section-title">
+        <h2>Intelligent Dashboard</h2>
+        <p>Our AI-powered system helps manage blood inventory, predict demand, and optimize distribution</p>
+      </div>
+      <img src="/api/placeholder/1000/600" alt="RaktSetu Dashboard Preview" class="preview-image">
+    </div>
+  </section>
+
+  <!-- User Types Section -->
+  <section class="section" id="users">
+    <div class="container">
+      <div class="section-title">
+        <h2>Who Can Use RaktSetu?</h2>
+        <p>Our platform serves multiple stakeholders in the blood donation ecosystem</p>
+      </div>
+      <div class="users">
+        <div class="user-card">
+          <h3>Patients</h3>
+          <p>Search for blood, place requests, track deliveries, and access emergency SOS features when time is critical.</p>
+        </div>
+        <div class="user-card">
+          <h3>Donors</h3>
+          <p>Register as a donor, track your eligibility, schedule donations, and see the impact of your contributions.</p>
+        </div>
+        <div class="user-card">
+          <h3>Blood Banks</h3>
+          <p>Manage inventory, handle requests, verify blood units, and use AI-powered demand forecasting.</p>
+        </div>
+        <div class="user-card">
+          <h3>Hospitals</h3>
+          <p>Request blood for patients, manage inventory, and track deliveries with real-time updates.</p>
+        </div>
+        <div class="user-card">
+          <h3>Delivery Partners</h3>
+          <p>Manage delivery requests, provide real-time updates, and ensure safe transport with medbox monitoring.</p>
+        </div>
+        <div class="user-card">
+          <h3>Remote Users</h3>
+          <p>Access blood services via SMS or USSD when internet connectivity is limited or unavailable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="section cta">
+    <div class="container">
+      <h2>Join the RaktSetu Network Today</h2>
+      <p>Whether you're a patient in need, a donor wanting to help, or a blood bank looking to optimize operations, RaktSetu connects you to a lifesaving ecosystem.</p>
+      <a href="#" class="btn btn-outline">Get Started Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>RaktSetu</h3>
+          <p>Bridging blood donors with those in need through technology and compassion.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#users">For Users</a></li>
+            <li><a href="#">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>For Users</h3>
+          <ul>
+            <li><a href="#">Request Blood</a></li>
+            <li><a href="#">Become a Donor</a></li>
+            <li><a href="#">Blood Banks</a></li>
+            <li><a href="#">Delivery Partners</a></li>
+            <li><a href="#">Remote Access</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="#">support@raktsetu.com</a></li>
+            <li><a href="#">+91 1234567890</a></li>
+            <li><a href="#">Emergency Helpline</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 RaktSetu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

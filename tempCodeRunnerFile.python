@@ -1,0 +1,83 @@
+import os
+import hashlib
+import base64
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+import secrets
+
+# Constants
+backend = default_backend()
+salt = os.urandom(16)  # Secure random salt
+iterations = 100_000  # Increase for production
+
+# Generate a secure key
+def generate_key(password: str) -> bytes:
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=iterations,
+        backend=backend
+    )
+    key = kdf.derive(password.encode())
+    return key
+
+# Encrypt a message
+def encrypt_message(message: str, password: str) -> dict:
+    key = generate_key(password)
+    iv = os.urandom(16)
+    cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=backend)
+    encryptor = cipher.encryptor()
+    ct = encryptor.update(message.encode()) + encryptor.finalize()
+    return {
+        'ciphertext': base64.b64encode(ct).decode(),
+        'iv': base64.b64encode(iv).decode(),
+        'salt': base64.b64encode(salt).decode()
+    }
+
+# Decrypt a message
+def decrypt_message(encrypted_data: dict, password: str) -> str:
+    salt_decoded = base64.b64decode(encrypted_data['salt'])
+    iv = base64.b64decode(encrypted_data['iv'])
+    ct = base64.b64decode(encrypted_data['ciphertext'])
+
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt_decoded,
+        iterations=iterations,
+        backend=backend
+    )
+    key = kdf.derive(password.encode())
+    cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=backend)
+    decryptor = cipher.decryptor()
+    return (decryptor.update(ct) + decryptor.finalize()).decode()
+
+# Generate secure agent ID (authentication)
+def generate_agent_id(agent_name: str) -> str:
+    secret = secrets.token_hex(16)
+    hashed = hashlib.sha256((agent_name + secret).encode()).hexdigest()
+    return hashed
+
+# Tamper check hash (integrity verification)
+def get_data_hash(data: str) -> str:
+    return hashlib.sha256(data.encode()).hexdigest()
+
+# Sample Usage
+if __name__ == "__main__":
+    password = "TopSecretPass"
+    message = "Meet at location Alpha at 0300 hours."
+
+    encrypted = encrypt_message(message, password)
+    print("[Encrypted Message]", encrypted)
+
+    decrypted = decrypt_message(encrypted, password)
+    print("[Decrypted Message]", decrypted)
+
+    agent_id = generate_agent_id("Agent007")
+    print("[Agent ID]", agent_id)
+
+    hash_val = get_data_hash(message)
+    print("[Data Hash for Integrity Check]", hash_val)
