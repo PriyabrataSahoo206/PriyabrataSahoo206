@@ -5,7 +5,7 @@ Here is a revised version of your `README.md` file with details about RAKTSETU i
 - 👀 I’m interested in leveraging technology for social good.
 - 🌱 I’m currently learning advanced web and mobile app development.
 - 💞️ I’m looking to collaborate on innovative projects that solve real-life problems.
-- 📫 How to reach me: [Your contact details or email address]
+- 📫 How to reach me: [MAIL- priyasahoo.2600@gmail.com]
 - 😄 Pronouns: He/Him
 - ⚡ Fun fact: I believe that every problem has a solution; we just need the right perspective to find it.
 
