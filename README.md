@@ -72,7 +72,8 @@ Building scalable AI solutions, cloud-powered applications, and intelligent syst
 
 📧 Email: priyasahoo.2600@gmail.com  
 💼 LinkedIn: https://www.linkedin.com/in/priyabrata-sahoo-b19a31316/  
-🌍 GitHub: https://github.com/PriyabrataSahoo206  
+🌍 GitHub: https://github.com/PriyabrataSahoo206 
+💼 Portfolio: https://portfoliopriyabratasahoo.edgeone.dev/
 
 ---
 
