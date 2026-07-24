@@ -71,7 +71,7 @@ Building scalable AI solutions, cloud-powered applications, and intelligent syst
 ## 🌐 Connect With Me
 
 📧 Email: priyasahoo.2600@gmail.com  
-💼 LinkedIn: (Add Your LinkedIn URL)  
+💼 LinkedIn: https://www.linkedin.com/in/priyabrata-sahoo-b19a31316/  
 🌍 GitHub: https://github.com/PriyabrataSahoo206  
 
 ---
